@@ -9,6 +9,8 @@ CoordMode, Mouse, Window
 ; This is used because alt modifier would send the ctrl modifier as well. Check AHK docs.
 #MenuMaskKey vk07 
 
+FileInstall, redx.bmp, redx.bmp
+FileInstall, login.bmp, login.bmp
 FileInstall, back.bmp, back.bmp
 FileInstall, character.bmp, character.bmp
 FileInstall, charplay.bmp, charplay.bmp
@@ -1338,6 +1340,7 @@ MAINLOOP:
 	FishingCounter := 1
 	LockpickCounter := 1
 	Harvested := 0
+	StealthReset := 0
 	
 	;Harvesting coords:
 	Loop, %MaxSpots%
@@ -1356,7 +1359,7 @@ MAINLOOP:
 			WinGet, winid ,, A
 			BlockInput, On
 			WinActivate, %WinName%
-			image_argument := "*" . Sens . " play.bmp"
+			image_argument := "*" . Sens . " login.bmp"
 			ImageSearch, FoundX, FoundY, 0, 0, %Width%, %Height%, %image_argument%
 			if ErrorLevel = 1
 			{
@@ -1409,16 +1412,41 @@ MAINLOOP:
 			if (Stealth) {
 				GuiControl,,Routine, %RoutineMessage2%
 				Sleep 1000
+				StealthReset++
 				i := 0
-				while (i < Steps)
-				{	
-					StealthDelay := 9300 / Steps
+				if (StealthReset < 7) {
+					while (i < Steps)
+					{	
+						StealthDelay := 9300 / Steps
+						HoldHotkey(WinName,Direction,100)
+						i++
+						if (i = Steps) {
+							SendHotkey(WinName,HidingKey)
+							Sleep 50
+							SendHotkey(WinName,HidingKey)
+							Sleep 50
+							SendHotkey(WinName,HidingKey)
+							Sleep 50
+						}
+						Sleep %StealthDelay%
+						if breakvar = 1
+							break	
+					}				
+				} else {
+					; walk once, unhide
+					GuiControl,,Routine, Stealth reset round
 					HoldHotkey(WinName,Direction,100)
-					Sleep %StealthDelay%
-					i++
-					if breakvar = 1
-						break	
+					Sleep 1000
+					SendHotkey(WinName,HidingKey)
+					Sleep 50
+					SendHotkey(WinName,HidingKey)
+					Sleep 50
+					SendHotkey(WinName,HidingKey)
+					Sleep 50
+					StealthReset := 0
+					Sleep 10000
 				}
+
 				Sleep %LagDelay%
 			}
 			else
@@ -2159,17 +2187,34 @@ CheckDelog(Window,Char)
 	Global breakvar
 	WinActivate, %Window%
 	WinGetPos, X, Y, Width, Height, %Window%
-	OffsetY := 43 * (Char - 1)
+	; offset of 75 down from topleft of Select word in character screen on 1920x1080
+	OffsetY := 43 * (Char - 1) + 75
 	
-	;Look for the title screen play button
+	;Look for the title screen login button
+	GuiControl,,Routine, Clicking login button
 	i := 0
 	Loop
-	{
+	{		
+		; we need to login
 		WinActivate, %Window%
-		image_argument := "*" . Sens . " play.bmp"
+		image_argument := "*" . Sens . " login.bmp"
+		; ugly hack to click password field which is on top of login button approximately -45 pixels in 1920x1080 display
+		Sleep 500
+		ImageClick(Window,Width,Height,image_argument,0,-45)
+		Sleep 500
+		; EDIT YOUR LOGIN INFO BELOW
+		Send PASSWORD
+		Sleep 500
+		; ugly hack to click username field which is on top of login button approximately -105 pixels in 1920x1080 display
+		ImageClick(Window,Width,Height,image_argument,0,-105)
+		Sleep 500
+		; EDIT YOUR LOGIN INFO BELOW
+		Send USERNAME
+		Sleep 1000
 		if ImageClick(Window,Width,Height,image_argument)
 			break
-		Sleep 1000
+		Sleep 3000
+		
 		
 		i++
 		if (i > 60)
@@ -2199,14 +2244,13 @@ CheckDelog(Window,Char)
 			return
 	}
 
-	
-	
 	;Play button was present and clicked
 	;Move mouse out of the way
 	Sleep 100
 	MouseMove,Width/2,Height/2
 	
 	;Look for community tab
+	GuiControl,,Routine, Clicking community tab
 	i := 0
 	Loop
 	{
@@ -2240,6 +2284,7 @@ CheckDelog(Window,Char)
 	
 	
 	;Look for server name
+	GuiControl,,Routine, Clicking server name
 	i := 0
 	Loop
 	{
@@ -2271,6 +2316,7 @@ CheckDelog(Window,Char)
 	}
 	
 	;Check that the server is OPEN
+	GuiControl,,Routine, Clicking server name if OPEN
 	i := 0
 	Loop
 	{
@@ -2302,6 +2348,7 @@ CheckDelog(Window,Char)
 	}
 	
 	;Look for Enter World button
+	GuiControl,,Routine, Clicking Enter World
 	i := 0
 	Loop
 	{
@@ -2333,11 +2380,12 @@ CheckDelog(Window,Char)
 	}
 	
 	;Look for Character Box corner
+	GuiControl,,Routine, Searching for character
 	Sleep 5000
 	Loop
 	{
 		WinActivate, %Window%
-		image_argument := "*60 character.bmp"
+		image_argument := "*80 character.bmp"
 		if ImageClick(Window,Width,Height,image_argument,,OffsetY)
 		{
 			Sleep 5000
@@ -2373,6 +2421,7 @@ CheckDelog(Window,Char)
 	}
 
 	;Look for Play button
+	GuiControl,,Routine, Clicking play button
 	Loop
 	{
 		WinActivate, %Window%
@@ -2412,6 +2461,7 @@ CheckDelog(Window,Char)
 	Sleep 3000
 	
 	;Check ingame, look for red bar in hp
+	GuiControl,,Routine, Searching for red hp bar
 	Loop
 	{
 		WinActivate, %Window%
@@ -2452,5 +2502,10 @@ CheckDelog(Window,Char)
 		if breakvar = 1
 			return
 	}
+	
+	; press red x to close welcome screen
+	image_argument := "*" . Sens . " redx.bmp"
+	ImageClick(Window,Width,Height,image_argument)
+	
 	return true
 }
