@@ -9,6 +9,7 @@ CoordMode, Mouse, Window
 ; This is used because alt modifier would send the ctrl modifier as well. Check AHK docs.
 #MenuMaskKey vk07 
 
+FileInstall, serverstarting.bmp, serverstarting.bmp
 FileInstall, redx.bmp, redx.bmp
 FileInstall, login.bmp, login.bmp
 FileInstall, back.bmp, back.bmp
@@ -2388,7 +2389,7 @@ CheckDelog(Window,Char)
 		image_argument := "*80 character.bmp"
 		if ImageClick(Window,Width,Height,image_argument,,OffsetY)
 		{
-			Sleep 5000
+			Sleep 2000
 			break
 		}
 		Sleep 1000
@@ -2441,6 +2442,11 @@ CheckDelog(Window,Char)
 			WinActivate, %Window%
 			;Try the blue OK for server failed
 			image_argument := "*" . Sens . " failed.bmp"
+			ImageClick(Window,Width,Height,image_argument)
+			Sleep 1000
+			WinActivate, %Window%
+			;Try the blue OK for server server starting
+			image_argument := "*" . Sens . " serverstarting.bmp"
 			ImageClick(Window,Width,Height,image_argument)
 			Sleep 1000
 			WinActivate, %Window%
