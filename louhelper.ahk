@@ -9,6 +9,7 @@ CoordMode, Mouse, Window
 ; This is used because alt modifier would send the ctrl modifier as well. Check AHK docs.
 #MenuMaskKey vk07 
 
+FileInstall, serverfullok.bmp, serverfullok.bmp
 FileInstall, serverstarting.bmp, serverstarting.bmp
 FileInstall, redx.bmp, redx.bmp
 FileInstall, login.bmp, login.bmp
@@ -821,22 +822,24 @@ LOADCONFIG:
 	{
 		Hotkey,%StopKey%,Stop
 		Hotkey,%EmergencyKey%,Emergency
-		Loop, %MaxCustomKeys%
+		Loop, %MaxCustomKeys% 
 		{
+			j := A_Index
 			i := 1
 			while (i < 6)
 			{
-				if CustomKeys%A_Index%Key%i%Mod = 2
+				if CustomKeys%j%Key%i%Mod = 2
 					CustomModifier := "!"
-				else if CustomKeys%A_Index%Key%i%Mod = 3
+				else if CustomKeys%j%Key%i%Mod = 3
 					CustomModifier := "^"
-				else if CustomKeys%A_Index%Key%i%Mod = 4
+				else if CustomKeys%j%Key%i%Mod = 4
 					CustomModifier := "+"
-				CustomHotkey := CustomModifier . CustomKeys%A_Index%Key%i%
-				;Hotkey,%customHotkey%,CustomKeys%A_Index%Key%i%Routine
+				CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
+				;Hotkey,%customHotkey%,CustomKeys%j%Key%i%Routine
 				Hotkey,%CustomHotkey%,CUSTOMKEYSROUTINE
 				i++
 			}
+			MsgBox, %i%
 		}
 	}
 	
@@ -1298,22 +1301,24 @@ return
 CUSTOMKEYSROUTINE:
 	Loop, %MaxCustomKeys%
 	{
+		j := A_Index
 		i := 1
 		while (i < 6)
 		{
-			if CustomKeys%A_Index%Key%i%Mod = 2
+			if CustomKeys%j%Key%i%Mod = 2
 				CustomModifier := "!"
-			else if CustomKeys%A_Index%Key%i%Mod = 3
+			else if CustomKeys%j%Key%i%Mod = 3
 				CustomModifier := "^"
-			else if CustomKeys%A_Index%Key%i%Mod = 4
+			else if CustomKeys%j%Key%i%Mod = 4
 				CustomModifier := "+"
-			CustomHotkey := CustomModifier . CustomKeys%A_Index%Key%i%
+			CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
 			if ( A_ThisHotkey == CustomHotkey)
-				SendHotkey(WinName,CustomKeys%A_Index%Key%i%InGame)
+				SendHotkey(WinName,CustomKeys%j%Key%i%InGame)
 			i++
 		}
 	}
 return
+
 
 MAINLOOP:
 	GoSub, Save
@@ -2397,6 +2402,12 @@ CheckDelog(Window,Char)
 		i++
 		if (i > 60)
 		{
+		
+			WinActivate, %Window%
+			;Look for the server full Ok button in an error window
+			image_argument := "*" . Sens . " serverfullok.bmp"
+			ImageClick(Window,Width,Height,image_argument)
+			Sleep 1000
 			WinActivate, %Window%
 			;Look for the Ok button in an error window
 			image_argument := "*" . Sens . " okerror.bmp"
