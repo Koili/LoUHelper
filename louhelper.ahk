@@ -9,6 +9,7 @@ CoordMode, Mouse, Window
 ; This is used because alt modifier would send the ctrl modifier as well. Check AHK docs.
 #MenuMaskKey vk07 
 
+FileInstall, connect.bmp, connect.bmp
 FileInstall, serverfullok.bmp, serverfullok.bmp
 FileInstall, serverstarting.bmp, serverstarting.bmp
 FileInstall, redx.bmp, redx.bmp
@@ -1299,6 +1300,7 @@ REMOVECUSTOMKEYSTAB:
 return
 
 CUSTOMKEYSROUTINE:
+	#IfWinActive Legends of Aria
 	Loop, %MaxCustomKeys%
 	{
 		j := A_Index
@@ -1318,7 +1320,6 @@ CUSTOMKEYSROUTINE:
 		}
 	}
 return
-
 
 MAINLOOP:
 	GoSub, Save
@@ -2250,18 +2251,24 @@ CheckDelog(Window,Char)
 			return
 	}
 
-	;Play button was present and clicked
+	;Login button was present and clicked
 	;Move mouse out of the way
 	Sleep 100
 	MouseMove,Width/2,Height/2
 	
-	;Look for community tab
-	GuiControl,,Routine, Clicking community tab
+	;Enter address and click connect
+	GuiControl,,Routine, Enter address and click connect
 	i := 0
 	Loop
 	{
 		WinActivate, %Window%
-		image_argument := "*" . Sens . " community.bmp"
+		image_argument := "*" . Sens . " connect.bmp"
+		; offset x coordinate by -100 to activate address field
+		ImageClick(Window,Width,Height,image_argument, -100)
+		Sleep 200
+		Send cluster1.shardsonline.com:5040
+		Sleep 200
+		; click connect
 		if ImageClick(Window,Width,Height,image_argument)
 			break
 		
@@ -2271,112 +2278,32 @@ CheckDelog(Window,Char)
 		if ImageClick(Window,Width,Height,image_argument)
 			return CheckDelog(Window,Char)
 		
-		Sleep 1000
+		Sleep 3000
 
 		i++
 		if (i > 60)
 		{	
 			WinActivate, %Window%
-			;Timed out in a weird way, click back button and start over
-			image_argument := "*" . Sens . " back.bmp"
+			;Look for the server full Ok button in an error window
+			image_argument := "*" . Sens . " serverfullok.bmp"
+			ImageClick(Window,Width,Height,image_argument)
+			Sleep 1000		
+			WinActivate, %Window%
+			;Look for the Ok button in an error window
+			image_argument := "*" . Sens . " okerror.bmp"
 			ImageClick(Window,Width,Height,image_argument)
 			Sleep 1000
-			return CheckDelog(Window,Char)
-		}
-		if breakvar = 1
-			return
-	}
-	
-	
-	
-	;Look for server name
-	GuiControl,,Routine, Clicking server name
-	i := 0
-	Loop
-	{
-		WinActivate, %Window%
-		image_argument := "*" . Sens . " loultima.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			break
-		
-		WinActivate, %Window%
-		;Look for the Connect Failed window
-		image_argument := "*" . Sens . " okerror.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			return CheckDelog(Window,Char)
-		
-		Sleep 1000
-		
-		i++
-		if (i > 60)
-		{
 			WinActivate, %Window%
-			;Timed out in a weird way, click back button and start over
-			image_argument := "*" . Sens . " back.bmp"
+			;Try the blue OK for server failed
+			image_argument := "*" . Sens . " failed.bmp"
 			ImageClick(Window,Width,Height,image_argument)
 			Sleep 1000
-			return CheckDelog(Window,Char)
-		}
-		if breakvar = 1
-			return
-	}
-	
-	;Check that the server is OPEN
-	GuiControl,,Routine, Clicking server name if OPEN
-	i := 0
-	Loop
-	{
-		WinActivate, %Window%
-		image_argument := "*20 open.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			break
-		
-		WinActivate, %Window%
-		;Look for the Connect Failed window
-		image_argument := "*" . Sens . " okerror.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			return CheckDelog(Window,Char)
-		
-		Sleep 1000
-		
-		i++
-		if (i > 60)
-		{
 			WinActivate, %Window%
-			;Timed out in a weird way, click back button and start over
+			;Timed out in a weird way, click back button twice and start over
 			image_argument := "*" . Sens . " back.bmp"
 			ImageClick(Window,Width,Height,image_argument)
-			Sleep 1000
-			return CheckDelog(Window,Char)
-		}
-		if breakvar = 1
-			return
-	}
-	
-	;Look for Enter World button
-	GuiControl,,Routine, Clicking Enter World
-	i := 0
-	Loop
-	{
-		WinActivate, %Window%
-		image_argument := "*" . Sens . " enter.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			break
-		
-		WinActivate, %Window%
-		;Look for the Connect Failed window
-		image_argument := "*" . Sens . " okerror.bmp"
-		if ImageClick(Window,Width,Height,image_argument)
-			return CheckDelog(Window,Char)
-		
-		Sleep 1000
-		
-		i++
-		if (i > 60)
-		{
+			Sleep 3000
 			WinActivate, %Window%
-			;Timed out in a weird way, click back button and start over
-			image_argument := "*" . Sens . " back.bmp"
 			ImageClick(Window,Width,Height,image_argument)
 			Sleep 1000
 			return CheckDelog(Window,Char)
@@ -2394,7 +2321,7 @@ CheckDelog(Window,Char)
 		image_argument := "*80 character.bmp"
 		if ImageClick(Window,Width,Height,image_argument,,OffsetY)
 		{
-			Sleep 2000
+			Sleep 1000
 			break
 		}
 		Sleep 1000
