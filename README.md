@@ -34,4 +34,4 @@ Installing:
 
 ??) The script is tuned to work with 1920x1080 resolution - other resolutions might need some more fine tuning.
 
-???) If you have problems, you ask can for help from Snowflake on Discord
+???) If you have problems, you can ask for help from Snowflake on Discord
