@@ -33,3 +33,5 @@ Installing:
 12) You should automatically log in!
 
 ??) The script is tuned to work with 1920x1080 resolution - other resolutions might need some more fine tuning.
+
+???) If you have problems, you ask for help from Snowflake on Discord
