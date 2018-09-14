@@ -1308,7 +1308,7 @@ REMOVECUSTOMKEYSTAB:
 return
 
 CUSTOMKEYSROUTINE:
-	#IfWinActive LA1
+	#IfWinActive Legends of Aria
 	{
 		Loop, %MaxCustomKeys%
 		{
