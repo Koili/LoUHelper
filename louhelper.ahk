@@ -820,15 +820,18 @@ LOADCONFIG:
 
 	;Register hotkeys
 	try
-	{
+	{	
 		Hotkey,%StopKey%,Stop
 		Hotkey,%EmergencyKey%,Emergency
+		;MsgBox, maxkeys %MaxCustomKeys%
 		Loop, %MaxCustomKeys% 
 		{
 			j := A_Index
 			i := 1
+			;MsgBox, page %j%
 			while (i < 6)
-			{
+			{				
+				;MsgBox, key %i%
 				if CustomKeys%j%Key%i%Mod = 2
 					CustomModifier := "!"
 				else if CustomKeys%j%Key%i%Mod = 3
@@ -836,11 +839,16 @@ LOADCONFIG:
 				else if CustomKeys%j%Key%i%Mod = 4
 					CustomModifier := "+"
 				CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
-				;Hotkey,%customHotkey%,CustomKeys%j%Key%i%Routine
-				Hotkey,%CustomHotkey%,CUSTOMKEYSROUTINE
+				;MsgBox, %CustomHotkey%
+				try {
+					Hotkey,%CustomHotkey%,CUSTOMKEYSROUTINE
+				} catch {
+					; no such hotkey, but there might be keys on other pages
+				}
+				;MsgBox, %CustomHotkey%
+				CustomModifier := ""
 				i++
 			}
-			MsgBox, %i%
 		}
 	}
 	
@@ -1300,7 +1308,7 @@ REMOVECUSTOMKEYSTAB:
 return
 
 CUSTOMKEYSROUTINE:
-	#IfWinActive Legends of Aria
+	#IfWinActive LA1
 	{
 		Loop, %MaxCustomKeys%
 		{
@@ -1315,8 +1323,10 @@ CUSTOMKEYSROUTINE:
 				else if CustomKeys%j%Key%i%Mod = 4
 					CustomModifier := "+"
 				CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
-				if ( A_ThisHotkey == CustomHotkey)
+				if ( A_ThisHotkey == CustomHotkey) {
 					SendHotkey(WinName,CustomKeys%j%Key%i%InGame)
+				}
+				CustomModifier := ""
 				i++
 			}
 		}
