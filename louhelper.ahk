@@ -1301,22 +1301,24 @@ return
 
 CUSTOMKEYSROUTINE:
 	#IfWinActive Legends of Aria
-	Loop, %MaxCustomKeys%
 	{
-		j := A_Index
-		i := 1
-		while (i < 6)
+		Loop, %MaxCustomKeys%
 		{
-			if CustomKeys%j%Key%i%Mod = 2
-				CustomModifier := "!"
-			else if CustomKeys%j%Key%i%Mod = 3
-				CustomModifier := "^"
-			else if CustomKeys%j%Key%i%Mod = 4
-				CustomModifier := "+"
-			CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
-			if ( A_ThisHotkey == CustomHotkey)
-				SendHotkey(WinName,CustomKeys%j%Key%i%InGame)
-			i++
+			j := A_Index
+			i := 1
+			while (i < 6)
+			{
+				if CustomKeys%j%Key%i%Mod = 2
+					CustomModifier := "!"
+				else if CustomKeys%j%Key%i%Mod = 3
+					CustomModifier := "^"
+				else if CustomKeys%j%Key%i%Mod = 4
+					CustomModifier := "+"
+				CustomHotkey := CustomModifier . CustomKeys%j%Key%i%
+				if ( A_ThisHotkey == CustomHotkey)
+					SendHotkey(WinName,CustomKeys%j%Key%i%InGame)
+				i++
+			}
 		}
 	}
 return
@@ -2180,10 +2182,12 @@ ImageClick(Window,Width,Height,image_argument,offsetX:=0,offsetY:=0)
 		;Click found coords
 		FoundX := FoundX + offsetX
 		FoundY := FoundY + offsetY
+		BlockInput, On
 		MouseMove, FoundX, FoundY, 0
 		Send, {LButton Down}
 		Sleep 100
 		Send, {LButton Up}
+		BlockInput, Off
 		return true
 	}
 }
@@ -2201,23 +2205,23 @@ CheckDelog(Window,Char)
 	GuiControl,,Routine, Clicking login button
 	i := 0
 	Loop
-	{		
+	{
 		; we need to login
 		WinActivate, %Window%
 		image_argument := "*" . Sens . " login.bmp"
 		; ugly hack to click password field which is on top of login button approximately -45 pixels in 1920x1080 display
-		Sleep 500
+		Sleep 100
 		ImageClick(Window,Width,Height,image_argument,0,-45)
-		Sleep 500
+		Sleep 10
 		; EDIT YOUR LOGIN INFO BELOW
 		Send PASSWORD
-		Sleep 500
+		Sleep 10
 		; ugly hack to click username field which is on top of login button approximately -105 pixels in 1920x1080 display
 		ImageClick(Window,Width,Height,image_argument,0,-105)
-		Sleep 500
+		Sleep 10
 		; EDIT YOUR LOGIN INFO BELOW
 		Send USERNAME
-		Sleep 1000
+		Sleep 300
 		if ImageClick(Window,Width,Height,image_argument)
 			break
 		Sleep 3000
@@ -2314,7 +2318,7 @@ CheckDelog(Window,Char)
 	
 	;Look for Character Box corner
 	GuiControl,,Routine, Searching for character
-	Sleep 5000
+	Sleep 3000
 	Loop
 	{
 		WinActivate, %Window%
@@ -2329,7 +2333,6 @@ CheckDelog(Window,Char)
 		i++
 		if (i > 60)
 		{
-		
 			WinActivate, %Window%
 			;Look for the server full Ok button in an error window
 			image_argument := "*" . Sens . " serverfullok.bmp"
@@ -2433,6 +2436,10 @@ CheckDelog(Window,Char)
 			image_argument := "*" . Sens . " failed.bmp"
 			ImageClick(Window,Width,Height,image_argument)
 			Sleep 1000
+			;Try the blue OK for server server starting
+			image_argument := "*" . Sens . " serverstarting.bmp"
+			ImageClick(Window,Width,Height,image_argument)
+			Sleep 1000
 			WinActivate, %Window%
 			;Timed out in a weird way, click back button twice and start over
 			image_argument := "*" . Sens . " back.bmp"
@@ -2446,10 +2453,5 @@ CheckDelog(Window,Char)
 		if breakvar = 1
 			return
 	}
-	
-	; press red x to close welcome screen
-	image_argument := "*" . Sens . " redx.bmp"
-	ImageClick(Window,Width,Height,image_argument)
-	
 	return true
 }
