@@ -823,6 +823,8 @@ LOADCONFIG:
 	{	
 		Hotkey,%StopKey%,Stop
 		Hotkey,%EmergencyKey%,Emergency
+		; Change login hotkey here
+		Hotkey,F10,RelogImmediately
 		;MsgBox, maxkeys %MaxCustomKeys%
 		Loop, %MaxCustomKeys% 
 		{
@@ -934,6 +936,9 @@ STOP:
 	breakvar := 1
 return
 
+RELOGIMMEDIATELY:
+	RelogNow(WinName,CharNumber)
+return
 SAVE:
 	Gui, Submit, NoHide
 	;Save gui config
@@ -1940,6 +1945,7 @@ MAINLOOP:
 				else
 				{
 					;Double click Mouse
+					WinGet, winid ,, A
 					WinActivate, %WinName%
 					Sleep 100
 					MouseMove, Custom%A_Index%CoordsItemX, Custom%A_Index%CoordsItemY, 0
@@ -1951,6 +1957,7 @@ MAINLOOP:
 					Send, {LButton Down}
 					Sleep 100
 					Send, {LButton Up}
+					WinActivate, ahk_id %winid%
 				}
 				Sleep %LagDelay%
 				if breakvar = 1
@@ -1973,6 +1980,7 @@ MAINLOOP:
 				else
 				{
 					;Double click Mouse
+					WinGet, winid ,, A
 					WinActivate, %WinName%
 					Sleep 100
 					MouseMove, Custom%A_Index%CoordsTargetX, Custom%A_Index%CoordsTargetY, 0
@@ -1980,6 +1988,7 @@ MAINLOOP:
 					Send, {LButton Down}
 					Sleep 100
 					Send, {LButton Up}
+					WinActivate, ahk_id %winid%
 				}
 				Sleep %LagDelay%
 				if breakvar = 1
@@ -2328,7 +2337,7 @@ CheckDelog(Window,Char)
 	
 	;Look for Character Box corner
 	GuiControl,,Routine, Searching for character
-	Sleep 3000
+	Sleep 4000
 	Loop
 	{
 		WinActivate, %Window%
@@ -2464,4 +2473,48 @@ CheckDelog(Window,Char)
 			return
 	}
 	return true
+}
+
+RelogNow(Window,Char)
+{
+	;MsgBox, w %Window% c %Char%
+	WinGet, winid ,, A
+	BlockInput, On
+	WinActivate, %Window%
+	WinGetPos, X, Y, Width, Height, %Window%
+	image_argument := "*" . Sens . " login.bmp"
+	lX1 := Width/2 - Width/8
+	lY1 := Height/2
+	lX2 := Width/2 + Width/8
+	lY2 := Height/2 + Height/4 
+	ImageSearch, FoundX, FoundY, lX1,lY1, lX2,lY2, %image_argument%
+	if ErrorLevel = 1
+	{
+		;We are still in game
+		WinActivate, ahk_id %winid%
+		BlockInput, Off
+		return false
+	}
+	else
+	{
+		;Need to relog	
+		WinActivate, ahk_id %winid%
+		BlockInput, Off
+		CheckDelog(Window,Char)
+		RelogCounter++
+		guicontrol,,RelogCounter, %RelogCounter%
+		Sleep 1000
+		WinActivate, %Window%
+		Sleep 1000
+		
+		;Open Bag if lockpicking
+		if (Lockpicking)
+			SendHotkey(Window,BackpackKey)
+		
+		;Target closest
+		if (Vet or Lore or Physical or MagicAtk)
+			SendHotkey(Window,NextTargetKey)
+			
+		return true
+	}
 }
