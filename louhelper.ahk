@@ -1365,6 +1365,11 @@ MAINLOOP:
 	LockpickCounter := 1
 	Harvested := 0
 	StealthReset := 0
+	FishingMoveCounter := 0
+	FishingChangeDirectionAfter := 11
+	FishingDirection = %LeftKey%
+	FishingX := FishingX1
+	FishingY := FishingY1
 	
 	;Harvesting coords:
 	Loop, %MaxSpots%
@@ -1802,28 +1807,28 @@ MAINLOOP:
 		
 		if (Fishing)
 		{
-			if (Fishing2)
-			{
-				;If Odd loop fish1, else fish2
-				if (LoopCounter&1)
-				{
-					FishingX := FishingX1
-					FishingY := FishingY1
-					GuiControl,,Routine, %RoutineMessage19% 
-				}
-				else
-				{
-					FishingX := FishingX2
-					FishingY := FishingY2
-					GuiControl,,Routine, %RoutineMessage20%
-				}
-			}
-			else
-			{
-				FishingX := FishingX1
-				FishingY := FishingY1
-				GuiControl,,Routine, %RoutineMessage19%
-			}
+			;if (Fishing2)
+			;{
+			;	;If Odd loop fish1, else fish2
+			;	if (LoopCounter&1)
+			;	{
+			;		FishingX := FishingX1
+			;		FishingY := FishingY1
+			;		GuiControl,,Routine, %RoutineMessage19% 
+			;	}
+			;	else
+			;	{
+			;		FishingX := FishingX2
+			;		FishingY := FishingY2
+			;		GuiControl,,Routine, %RoutineMessage20%
+			;	}
+			;}
+			;else
+			;{
+			;	FishingX := FishingX1
+			;	FishingY := FishingY1
+			;	GuiControl,,Routine, %RoutineMessage19%
+			;}
 			
 			if (FishingTotal > 1)
 			{
@@ -1832,17 +1837,45 @@ MAINLOOP:
 				SendHotkey(WinName,FishingKey%FishingCounter%)
 				Sleep 2500
 			}
+			
+			FishingMoveCounter++
+			HoldHotkey(WinName,DownKey,300)
+			HoldHotkey(WinName,FishingDirection,300)
+			HoldHotkey(WinName,UpKey,500)
+			
+			if (FishingMoveCounter > FishingChangeDirectionAfter)
+			{
+				if (FishingDirection = RightKey) 
+				{
+					FishingX := FishingX1
+					FishingY := FishingY1
+					FishingDirection = %LeftKey%
+				}
+				else
+				{			
+					FishingX := FishingX2
+					FishingY := FishingY2
+					FishingDirection = %RightKey%
+				}
+				FishingMoveCounter := 0
+			}
+
 			SendHotkey(WinName,SkillKey)
 			Sleep %LagDelay%
 			
-			WinActivate, %WinName%
-			Sleep 100
+			Sleep 50
 			SendHotkey(WinName,CenterCamKey)
-			Sleep 100
+			Sleep 50
+			WinGet, winid ,, A
+			WinActivate, %WinName%
+			BlockInput, On
 			MouseMove, FishingX, FishingY, 0
 			Send, {LButton Down}
 			Sleep 100
 			Send, {LButton Up}
+			Sleep 50
+			BlockInput, Off
+			WinActivate, ahk_id %winid%
 			Sleep %LagDelay%
 			Sleep %FishingDelay%
 			FishingCounter++
