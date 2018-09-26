@@ -58,13 +58,13 @@ Loop Parse, RoutineMessages, `n
 ;Lists of settings to iterate
 Tabs = General|GeneralKeys|Taming|Music|Healing|Hiding|Fishing|Offensive|Lockpicking|Custom|Harvesting|ItemID|CustomKeys
 
-GuiSettingsList = OnTop,FromName,WinName,AutoRelog,CharNumber,Sens,LagDelay,KeyDelay,Taming,TamingDelay,Release,ReleaseDelay,ReleaseSens,Lore,LoreDelay,Vet,VetDelay,Music,MusicDelay,Peace,PeaceDelay,Provo,ProvoDelay,Discord,DiscordDelay,Bandages,MagicHeal,CurePot,CureSpell,HealingDelay,Hiding,Stealth,Steps,HidingDelay,Fishing,FishingDelay,FishingX1,FishingY1,Fishing2,FishingX2,FishingY2,FishingTotal,Physical,PhysicalDuration,MagicAtk,DoubleTarget,OffensiveDelay,Lockpicking,LockpickDelay,Box1X,Box1Y,Lockpicking2,Box2X,Box2Y,LockpickingSens,ItemID,ItemIDSourceTLX,ItemIDSourceTLY,ItemIDSourceBRX,ItemIDSourceBRY,ItemIDContainerX,ItemIDContainerY,ItemIDSens,ItemIDDelay,CustomRoutineDelay,HarvestingRoutineDelay,HarvestSens
+GuiSettingsList = OnTop,FromName,WinName,AutoRelog,CharNumber,Sens,LagDelay,KeyDelay,Taming,TamingDelay,Release,ReleaseDelay,ReleaseSens,Lore,LoreDelay,Vet,VetDelay,Music,MusicDelay,Peace,PeaceDelay,Provo,ProvoDelay,Discord,DiscordDelay,Bandages,MagicHeal,CurePot,CureSpell,HealingDelay,Hiding,Stealth,Steps,HidingDelay,Fishing,FishingDelay,FishingX1,FishingY1,Fishing2,FishingX2,FishingY2,FishingTotal,Physical,PhysicalDuration,MagicAtk,DoubleTarget,OffensiveDelay,Lockpicking,LockpickDelay,Box1X,Box1Y,Lockpicking2,Box2X,Box2Y,LockpickingSens,ItemID,ItemIDSourceTLX,ItemIDSourceTLY,ItemIDSourceBRX,ItemIDSourceBRY,ItemIDContainerX,ItemIDContainerY,ItemIDSens,ItemIDDelay,CustomRoutineDelay,HarvestingRoutineDelay,HarvestSens,Prospecting
 
 GuiDPSettingsList = BandagesTarget,MagicHealTarget,CurePotTarget,CureSpellTarget,MagicAtkTarget
 
-GuiHotkeysList = SelfKey,TargetKey,LastKey,SkillKey,SecondKey,NextTargetKey,LastObjectKey,CenterCamKey,BackpackKey,StopKey,EmergencyKey,LeftKey,RightKey,UpKey,DownKey,TamingKey,ReleaseKey,LoreKey,AllKillKey,AllStopKey,MusicKey,PeaceKey,ProvoKey,DiscordKey,BandagesKey,MagicHealKey,CurePotKey,CureSpellKey,HidingKey,FishingKey1,FishingKey2,FishingKey3,FishingKey4,FishingKey5,FishingKey6,FishingKey7,FishingKey8,FishingKey9,PhysicalKey,MagicAtkKey,Box1Key,Box2Key,GlassKey,LockpickKey
+GuiHotkeysList = SelfKey,TargetKey,LastKey,SkillKey,SecondKey,NextTargetKey,LastObjectKey,CenterCamKey,BackpackKey,StopKey,EmergencyKey,LeftKey,RightKey,UpKey,DownKey,TamingKey,ReleaseKey,LoreKey,AllKillKey,AllStopKey,MusicKey,PeaceKey,ProvoKey,DiscordKey,BandagesKey,MagicHealKey,CurePotKey,CureSpellKey,HidingKey,FishingKey1,FishingKey2,FishingKey3,FishingKey4,FishingKey5,FishingKey6,FishingKey7,FishingKey8,FishingKey9,PhysicalKey,MagicAtkKey,Box1Key,Box2Key,GlassKey,LockpickKey,ProspectingKey
 
-GuiLabelsList = OptionTitle,TabsList,ConfigLabel,ClientNameLabel,FromNameLabel,ToNameLabel,CharNumberLabel,SensLabel,SelfKeyLabel,TargetKeyLabel,LastKeyLabel,LastObjectLabel,SkillKeyLabel,SecondKeyLabel,NextTargetKeyLabel,CenterCamKeyLabel,BackpackKeyLabel,KeyDelayLabel,LagDelayLabel,StopKeyLabel,EmergencyKeyLabel,UpKeyLabel,LeftKeyLabel,DownKeyLabel,RightKeyLabel,TamingKeyLabel,TamingDelayLabel,ReleaseKeyLabel,ReleaseDelayLabel,ReleaseSensLabel,LoreKeyLabel,LoreDelayLabel,AllKillKeyLabel,AllStopKeyLabel,VetDelayLabel,MusicKeyLabel,MusicDelayLabel,PeaceKeyLabel,PeaceDelayLabel,ProvoKeyLabel,ProvoDelayLabel,DiscordKeyLabel,DiscordDelayLabel,BandagesKeyLabel,MagicHealKeyLabel,CurePotLabel,CureSpellLabel,HealingDelayLabel,HidingKeyLabel,HidingDelayLabel,StepsLabel,FishingTotalLabel,FishingDelayLabel,FishingX1Label,FishingY1Label,FishingX2Label,FishingY2Label,FishingKey1Label,FishingKey2Label,FishingKey3Label,FishingKey4Label,FishingKey5Label,FishingKey6Label,FishingKey7Label,FishingKey8Label,FishingKey9Label,PhysicalKeyLabel,PhysicalDurationLabel,MagicAtkKeyLabel,OffensiveDelayLabel,LockpickKeyLabel,LockpickDelayLabel,Box1XLabel,Box1YLabel,Box1KeyLabel,Box2XLabel,Box2YLabel,Box2KeyLabel,LockpickingSensLabel,ItemIDSourceTLXLabel,ItemIDSourceTLYLabel,ItemIDSourceBRXLabel,ItemIDSourceBRYLabel,ItemIDContainerXLabel,ItemIDContainerYLabel,GlassKeyLabel,ItemIDSensLabel,ItemIDDelayLabel,CustomRoutineDelayLabel,HarvestingRoutineDelayLabel,HarvestSensLabel
+GuiLabelsList = OptionTitle,TabsList,ConfigLabel,ClientNameLabel,FromNameLabel,ToNameLabel,CharNumberLabel,SensLabel,SelfKeyLabel,TargetKeyLabel,LastKeyLabel,LastObjectLabel,SkillKeyLabel,SecondKeyLabel,NextTargetKeyLabel,CenterCamKeyLabel,BackpackKeyLabel,KeyDelayLabel,LagDelayLabel,StopKeyLabel,EmergencyKeyLabel,UpKeyLabel,LeftKeyLabel,DownKeyLabel,RightKeyLabel,TamingKeyLabel,TamingDelayLabel,ReleaseKeyLabel,ReleaseDelayLabel,ReleaseSensLabel,LoreKeyLabel,LoreDelayLabel,AllKillKeyLabel,AllStopKeyLabel,VetDelayLabel,MusicKeyLabel,MusicDelayLabel,PeaceKeyLabel,PeaceDelayLabel,ProvoKeyLabel,ProvoDelayLabel,DiscordKeyLabel,DiscordDelayLabel,BandagesKeyLabel,MagicHealKeyLabel,CurePotLabel,CureSpellLabel,HealingDelayLabel,HidingKeyLabel,HidingDelayLabel,StepsLabel,FishingTotalLabel,FishingDelayLabel,FishingX1Label,FishingY1Label,FishingX2Label,FishingY2Label,FishingKey1Label,FishingKey2Label,FishingKey3Label,FishingKey4Label,FishingKey5Label,FishingKey6Label,FishingKey7Label,FishingKey8Label,FishingKey9Label,PhysicalKeyLabel,PhysicalDurationLabel,MagicAtkKeyLabel,OffensiveDelayLabel,LockpickKeyLabel,LockpickDelayLabel,Box1XLabel,Box1YLabel,Box1KeyLabel,Box2XLabel,Box2YLabel,Box2KeyLabel,LockpickingSensLabel,ItemIDSourceTLXLabel,ItemIDSourceTLYLabel,ItemIDSourceBRXLabel,ItemIDSourceBRYLabel,ItemIDContainerXLabel,ItemIDContainerYLabel,GlassKeyLabel,ItemIDSensLabel,ItemIDDelayLabel,CustomRoutineDelayLabel,HarvestingRoutineDelayLabel,HarvestSensLabel,ProspectingKeyLabel
 
 GuiSetButtonsList = LoadedConfig,SetName,SetFishing,SetBox,SetSpotTarget,SetCustomCoordsItem,SetCustomCoordsTarget
 
@@ -491,7 +491,11 @@ Gui, Add, Edit, xp+72 y%Line5Text% w%DelayWidth% vItemIDDelay
 Gui, Tab, Harvesting
 Gui, Add, Text, x%Left% y0 w0
 Gui, Add, Button, xp+60 y%Line1Set% w200 vAddSpotTab gAddSpotTab, Add a new harvesting spot
-Gui, Add, Button, xp y%Line3Set% w200 vRemoveSpotTab gRemoveSpotTab, Remove last harvesting spot
+Gui, Add, Button, xp y%Line2Set% w200 vRemoveSpotTab gRemoveSpotTab, Remove last harvesting spot
+Gui, Add, Text, x%Left% y0 w0
+Gui, Add, Text, xp+25 y%Line3% w200 Right vProspectingKeyLabel, Tool Key
+Gui, Add, Edit, xp+205 y%Line3Text% w%DelayWidth% vProspectingKey
+Gui, Add, Checkbox, x%Left% y%Line3% vProspecting, Prospecting
 Gui, Add, Text, x%Left% y0 w0
 Gui, Add, Text, xp+25 y%Line4% w200 Right vHarvestSensLabel, Tolerance for image searching
 Gui, Add, Edit, xp+205 y%Line4Text% w%DelayWidth% HwndHHarvestSens vHarvestSens, 50
@@ -950,6 +954,8 @@ SAVE:
 	Loop, parse, GuiHotkeysList, `,
 		IniWrite, % %A_LoopField%, %UserConfig%, Hotkeys, % A_LoopField
 return
+
+
 	
 ONTOP:
 	Gui, Submit, NoHide
@@ -1371,6 +1377,8 @@ MAINLOOP:
 	FishingX := FishingX1
 	FishingY := FishingY1
 	
+
+	
 	;Harvesting coords:
 	Loop, %MaxSpots%
 	{
@@ -1381,7 +1389,7 @@ MAINLOOP:
 	{
 		if breakvar = 1
 			break
-		
+			
 		;Check for delog
 		if (AutoRelog)
 		{
@@ -2047,9 +2055,14 @@ MAINLOOP:
 	CleanUpGui(guiname)
 return
 	
+EMERGENCY:	
+
+	pause
+
+return
 	
 GUICLOSE:
-EMERGENCY:
+
 	GoSub, Save
 ExitApp
 
@@ -2064,6 +2077,9 @@ HarvestSpot(Window, WinWidth, WinHeight, HarvestRuneKey, HarvestScroll, HarvestS
 	Global breakvar
 	Global HarvestSens
 	Global HarvestingRoutineDelay
+	Global Prospecting
+	Global ProspectingKey
+
 	
 	if breakvar = 1
 		return
@@ -2092,6 +2108,8 @@ HarvestSpot(Window, WinWidth, WinHeight, HarvestRuneKey, HarvestScroll, HarvestS
 		if breakvar = 1
 				return
 		WinActivate, %Window%
+		SendHotkey(Window,Esc)
+		Sleep %LagDelay%
 		SendHotkey(Window,SkillKey)
 		Sleep %LagDelay%
 		SendHotkey(Window,CenterCamKey)
@@ -2106,7 +2124,7 @@ HarvestSpot(Window, WinWidth, WinHeight, HarvestRuneKey, HarvestScroll, HarvestS
 		
 		Loop
 		{
-			Sleep 100
+			Sleep 3000
 			if breakvar = 1
 				return
 			;Look for the Charge bar
@@ -2122,13 +2140,26 @@ HarvestSpot(Window, WinWidth, WinHeight, HarvestRuneKey, HarvestScroll, HarvestS
 			{
 				;Not harvesting anymore
 				breakvar2++
-				Sleep 1000
+				Sleep 100
+				SendHotkey(Window,Esc)
 			}
 			else
+			{
 				breakvar2 := 0
+				if(Prospecting)
+				{
+					MouseMove, HarvestCoords[i][1], HarvestCoords[i][2], 0				
+					SendHotkey(Window,ProspectingKey)
+					Sleep %LagDelay%
+					Send, {LButton Down}
+					Sleep 100
+					Send, {LButton Up}
+				}
+			}
+				
 			
 			;Could not see the harvest bar for more than 5 seconds.
-			if (breakvar2 > 5)
+			if (breakvar2 > 1)
 				break
 		}
 		Sleep %LagDelay%
@@ -2507,6 +2538,7 @@ CheckDelog(Window,Char)
 	}
 	return true
 }
+
 
 RelogNow(Window,Char)
 {
